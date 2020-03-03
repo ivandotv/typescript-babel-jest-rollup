@@ -22,6 +22,7 @@ Or you can use [deGit](https://github.com/Rich-Harris/degit) which is a very con
 - [Git Hooks](#git-hooks)
 - [Debugging](#debugging)
 - [Nodemon](#nodemon)
+- [Renovate Bot](#renovate-bot)
 
 ### Typescript via BabelJS
 
@@ -87,3 +88,7 @@ there are two debug configurations:
 ### Nodemon
 
 Nodemon is set to watch `dist/cjs` directory (where ES5 compile code is saved) and it will automatically reload `index.js`
+
+### Renovate Bot
+
+There is a renovate bot configuration file for automatically updating dependencies. Make sure to active renovate bot first via [github marketplace](https://github.com/marketplace/renovate)
