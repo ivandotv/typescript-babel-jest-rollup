@@ -112,12 +112,5 @@
     "typedoc-plugin-markdown": "^2.2.17",
     "typescript": "^3.8.3"
   },
-  "dependencies": {
-    "@types/lodash-es": "^4.17.3",
-    "lodash-es": "^4.17.15",
-    "lodash.filter": "^4.6.0",
-    "lodash.orderby": "^4.6.0",
-    "lodash.shuffle": "^4.2.0",
-    "mobx": "^5.15.4"
-  }
+  "dependencies": {}
 }
