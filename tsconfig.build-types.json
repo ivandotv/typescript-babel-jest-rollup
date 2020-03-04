@@ -1,18 +1,12 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "./tsconfig.check-types.json",
   "compilerOptions": {
     "emitDeclarationOnly": true,
     "declarationMap": true,
     "declaration": true,
     "isolatedModules": true,
     "incremental": true,
+    "noEmit": false,
     "tsBuildInfoFile": "./.buildcache/lib.tsbuildinfo"
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": [
-    "node_modules",
-    "src/**/__tests__",
-    "src/**/*.test.ts",
-    "src/**/*.spec.ts"
-  ]
+  }
 }
