@@ -53,14 +53,6 @@
       "pre-commit": "lint-staged"
     }
   },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "eslint --fix"
-    ],
-    "tests/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
-    ]
-  },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
