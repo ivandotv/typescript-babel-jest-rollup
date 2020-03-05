@@ -19,6 +19,7 @@
   "scripts": {
     "prepublishOnly": "npm run test && npm run build",
     "nodemon": "./node_modules/.bin/nodemon",
+    "commit": "git-cz",
     "fix:src": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx}\"",
     "fix:tests": "eslint --fix \"./tests/**/*.{js,jsx,ts,tsx}\"",
     "fix": "npm-run-all -p fix:*",
