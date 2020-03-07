@@ -10,7 +10,8 @@ module.exports = {
     'jest-watch-typeahead/testname'
   ],
   globals: {
-    __DEV__: true
+    __DEV__: true,
+    __VERSION__: true
   },
   coverageThreshold: {
     global: {
