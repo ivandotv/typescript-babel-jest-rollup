@@ -1,10 +1,10 @@
-# TypeScript, babel, Jest and Rollup Quick Start Template
+# TypeScript - Babel - Jest - Rollup Quick Start Template
 
 Opinionated template repository for creating javascript libraries with typescript, rollup babel, and jest.
 
 ## Getting Started
 
-You can immediately create your own repo by clicking on the `Use this template` button in the Github page UI.
+You can immediately create your repo by clicking on the `Use this template` button in the Github page UI.
 Or you can use [deGit](https://github.com/Rich-Harris/degit) which is a very convenient tool to quickly download the repository `degit https://github.com/ivandotv/node-module-typescript`
 
 ### Then
@@ -22,7 +22,7 @@ Or you can use [deGit](https://github.com/Rich-Harris/degit) which is a very con
 - [Git Hooks](#git-hooks)
 - [Debugging](#debugging)
 - [Nodemon](#nodemon)
-- [Convetional commits][#convetional-commits]
+- [Conventional Commits](#Conventional-commits)
 - [Generating Documentation](#generating-documentation)
 - [Renovate Bot](#renovate-bot)
 
@@ -93,7 +93,7 @@ if (false) {
 }
 ```
 
-And rollup will just treeeshake that piece of code in to oblivion :)
+And rollup will just tree shake that piece of code into oblivion :)
 
 ### Jest
 
@@ -147,9 +147,9 @@ there are two debug configurations:
 
 Nodemon is set to watch `dist/cjs` directory (where ES5 compile code is saved) and it will automatically reload `index.js`
 
-### Convetional Commits
+### Conventional Commits
 
-If you are not using [Convetional commits specifiction](https://www.conventionalcommits.org/en/v1.0.0/) for your commit messages, you should. Convetional commits CLI client is installed and it can be run by `npm run commit`.
+If you are not using [Conventional commits specifiction](https://www.conventionalcommits.org/en/v1.0.0/) for your commit messages, you should. Conventional commits CLI client is installed and it can be run by `npm run commit`.
 
 ### Generating documentation
 
