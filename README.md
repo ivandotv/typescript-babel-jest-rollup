@@ -95,6 +95,15 @@ if (false) {
 
 And rollup will just tree shake that piece of code into oblivion :)
 
+### Rollup
+
+Rollup is used to compile and bundle the code for the browser. Rollup configuration compiles:
+
+- `umd` versions with and without polyfills
+- `esm` versions for modern browsers with and without polyfills. Version without polyfills will be referenced by `package.json` `module` field.
+
+Peer dependencies will not be bundled.
+
 ### Jest
 
 Jest is used for testing. You can write your tests in typescript and they will be compiled via babel for the nodejs version that is running the tests. The testing environment is set to `node` you might want to change that if you need access to `DOM` in your tests.
@@ -106,15 +115,6 @@ Two plugins are added to jest:
 
 - `jest-watch-typeahead` (for filtering tests by file name or test name)
 - `jest-junit` for reporting coverage.
-
-### Rollup
-
-Rollup is used to compile and bundle the code for the browser. Rollup configuration compiles:
-
-- `umd` versions with and without polyfills
-- `esm` versions for modern browsers with and without polyfills. Version without polyfills will be referenced by `package.json` `module` field.
-
-Peer dependencies will not be bundled.
 
 ### ESLint and Prettier
 
