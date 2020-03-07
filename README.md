@@ -1,6 +1,6 @@
-# TypeScript, BabelJS, Jest and Rollup Quick Start Template
+# TypeScript, babel, Jest and Rollup Quick Start Template
 
-Opinionated template repository for creating javascript libraries with typescript, rollup babeljs, and jest.
+Opinionated template repository for creating javascript libraries with typescript, rollup babel, and jest.
 
 ## Getting Started
 
@@ -14,7 +14,7 @@ Or you can use [deGit](https://github.com/Rich-Harris/degit) which is a very con
 
 ## Table of Contents
 
-- [Typescript via BabelJS](#typescript-via-babeljs)
+- [Typescript via babel](#typescript-via-babel)
 - [Rollup configuration](#rollup)
 - [Jest](#jest)
 - [ESLint and Prettier](#eslint-and-prettier)
@@ -22,26 +22,82 @@ Or you can use [deGit](https://github.com/Rich-Harris/degit) which is a very con
 - [Git Hooks](#git-hooks)
 - [Debugging](#debugging)
 - [Nodemon](#nodemon)
+- [Convetional commits][#convetional-commits]
+- [Generating Documentation](#generating-documentation)
 - [Renovate Bot](#renovate-bot)
 
-### Typescript via BabelJS
+### Typescript via Babel
 
-Typescript files are compiled via Babeljs, which makes compilation a lot faster. However, as a consequence typescript types are not type-checked. Fear not there are scripts (`type-check` and `type-check:watch`) to check and watch for typescript errors.
+Typescript files are compiled via babel, which makes compilation a lot faster. However, as a consequence typescript types are not type-checked. Fear not there are scripts (`type-check` and `type-check:watch`) to check and watch for typescript errors.
 
 Babel is set to compile two versions of your source code (with no polyfills):
 
-- `cjs` (ES5) which targets node `v10`
-- `esm` (ES6) which targets browsers that support es6 modules (which results in very little transpiled code)
+- `build:cjs` (common js) which targets node `v10`
+- `build:esm` (ES6) which targets node `v12`
 
-You can generate documentation for your source files via [typedoc](https://typedoc.org).
-Currently, it is set up to go into `docs/api` directory and it is generated in markdown so it can be displayed on Github.
+There are also two additional babel plugins included:
 
-- Private members are excluded.
-- Only exported properties are documented.
+- [babel-plugin-dev-expression](https://github.com/4Catalyzer/babel-plugin-dev-expression#readme) which replaces:
+
+```js
+if (__DEV__) {
+  //dev only code
+}
+```
+
+with:
+
+```js
+if (process.env.NODE_ENV !== 'production') {
+  //dev only code
+}
+```
+
+Also this:
+
+```js
+const myApp{
+    version:__VERSION__
+}
+```
+
+Is replaced with the environment variable `PKG_VERSION` or with `package.json` `version` field.
+
+```js
+const myApp{
+    version:"1.0.1"
+}
+```
+
+- [babel-plugin-transform-define](https://github.com/FormidableLabs/babel-plugin-transform-define) which is used for the browser builds to replace:
+
+```js
+if (process.env.NODE_ENV !== 'production') {
+  //dev only code
+}
+```
+
+with:
+
+```js
+if ('production' !== 'production') {
+  //dev only code
+}
+```
+
+Which will be replaced by babel to:
+
+```js
+if (false) {
+  //dev only code
+}
+```
+
+And rollup will just treeeshake that piece of code in to oblivion :)
 
 ### Jest
 
-Jest is used for testing. You can write your tests in typescript and they will be compiled via babeljs for the nodejs version that is running the tests. The testing environment is set to `node` you might want to change that if you need access to `DOM` in your tests.
+Jest is used for testing. You can write your tests in typescript and they will be compiled via babel for the nodejs version that is running the tests. The testing environment is set to `node` you might want to change that if you need access to `DOM` in your tests.
 I think there is no faster way to run typescript tests in jest. :)
 
 The coverage threshold is set to `80%` globally.
@@ -53,10 +109,12 @@ Two plugins are added to jest:
 
 ### Rollup
 
-Rollup is used to compile code for the browser. Rollup configuration compiles:
+Rollup is used to compile and bundle the code for the browser. Rollup configuration compiles:
 
-- `umd` packages with and without polyfills
-- `esm` version for modern browsers.
+- `umd` versions with and without polyfills
+- `esm` versions for modern browsers with and without polyfills. Version without polyfills will be referenced by `package.json` `module` field.
+
+Peer dependencies will not be bundled.
 
 ### ESLint and Prettier
 
@@ -88,6 +146,18 @@ there are two debug configurations:
 ### Nodemon
 
 Nodemon is set to watch `dist/cjs` directory (where ES5 compile code is saved) and it will automatically reload `index.js`
+
+### Convetional Commits
+
+If you are not using [Convetional commits specifiction](https://www.conventionalcommits.org/en/v1.0.0/) for your commit messages, you should. Convetional commits CLI client is installed and it can be run by `npm run commit`.
+
+### Generating documentation
+
+You can generate documentation for your source files via [typedoc](https://typedoc.org)(`npm run docs`).
+Currently, it is set up to go into `docs/api` directory and it is generated in markdown so it can be displayed on Github.
+
+- Private members are excluded.
+- Only exported properties are documented.
 
 ### Renovate Bot
 
