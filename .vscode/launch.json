@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Program",
+      "name": "Main",
       "program": "${workspaceFolder}/src/index.ts",
       // "preLaunchTask": "npm: build:cjs",
       "outFiles": ["${workspaceFolder}/dist/cjs/**/*.js"],

@@ -5,6 +5,10 @@ module.exports = {
     node: true,
     jest: true
   },
+  globals: {
+    __DEV__: true,
+    __VERSION__: true
+  },
   plugins: ['@typescript-eslint/eslint-plugin', 'prettier', 'standard'],
   extends: ['prettier/standard', 'standard'],
   parser: '@typescript-eslint/parser',

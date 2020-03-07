@@ -1,53 +1,45 @@
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import babel from 'rollup-plugin-babel'
+import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import { terser } from 'rollup-plugin-terser'
 import filesize from 'rollup-plugin-filesize'
 // import visualizer from 'rollup-plugin-visualizer'
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
-const UMDLibraryName = 'MyLib'
+const libraryName = 'MyLib'
 
 const input = 'src/index.ts'
 
-const unpkgFilePath = libPath('./dist/unpkg', 'mylib')
-
-const babelPlugins = ['@babel/proposal-class-properties'] // stage-3 proposal
+const unpkgFilePath = libPath('./dist/unpkg', libraryName.toLocaleLowerCase())
 
 // https://github.com/rollup/rollup/issues/703#issuecomment-314848245
 function defaultPlugins(config = {}) {
   return [
-    babel(config.babel || undefined),
     resolve({ extensions }),
+    peerDepsExternal(),
+    babel(config.babel || undefined),
     commonjs(),
     filesize()
     // visualizer({ template: "circlepacking" }),
   ]
 }
 
-// setup config
-
-const umdBuild = {
+// umd build for the browser
+const umd = {
   input,
   output: [
     {
       file: unpkgFilePath('.js'),
       format: 'umd',
-      name: UMDLibraryName,
+      name: libraryName,
       sourcemap: true
     },
     {
       file: unpkgFilePath('.min.js'),
       format: 'umd',
-      name: UMDLibraryName,
-      sourcemap: true,
-      plugins: [terser()]
-    },
-    {
-      file: unpkgFilePath('.polyfill.min.js'),
-      format: 'umd',
-      name: UMDLibraryName,
+      name: libraryName,
       sourcemap: true,
       plugins: [terser()]
     }
@@ -55,63 +47,41 @@ const umdBuild = {
   plugins: defaultPlugins({
     babel: {
       extensions,
-      exclude: 'node_modules/**',
-      configFile: false,
-      presets: babelPresets({
-        // debug: true,
-        // "useBuiltIns": "usage",
-        // "corejs": 3,
-        modules: false,
-        targets: {
-          browsers: ['>0.2%', 'not dead', 'not op_mini all']
-        }
-      }),
-      plugins: babelPlugins
+      envName: 'browser'
     }
-  }),
-  external: []
-}
-const umdWithPolyFill = {
-  input,
-  output: [
-    {
-      file: unpkgFilePath('.polyfill.min.js'),
-      format: 'umd',
-      name: UMDLibraryName,
-      sourcemap: true,
-      plugins: [terser()]
-    }
-  ],
-  plugins: defaultPlugins({
-    babel: {
-      extensions,
-      exclude: 'node_modules/**',
-      configFile: false,
-      presets: babelPresets({
-        // debug: true,
-        useBuiltIns: 'usage',
-        corejs: 3,
-        modules: false,
-        targets: {
-          browsers: ['>0.2%', 'not dead', 'not op_mini all']
-        }
-      }),
-      plugins: babelPlugins
-    }
-  }),
-  external: []
+  })
 }
 
-const browserModulesBuild = {
+const umdWithPolyfill = {
   input,
   output: [
     {
-      file: unpkgFilePath('.module.js'),
+      file: unpkgFilePath('.polyfill.min.js'),
+      format: 'umd',
+      name: libraryName,
+      sourcemap: true,
+      plugins: [terser()]
+    }
+  ],
+  plugins: defaultPlugins({
+    babel: {
+      extensions,
+      envName: 'browserPolyfill'
+    }
+  })
+}
+
+// build for browsers as module
+const browserModule = {
+  input,
+  output: [
+    {
+      file: unpkgFilePath('.esm.js'),
       format: 'esm',
       sourcemap: true
     },
     {
-      file: unpkgFilePath('.module.min.js'),
+      file: unpkgFilePath('.esm.min.js'),
       format: 'esm',
       sourcemap: true,
       plugins: [terser()]
@@ -120,31 +90,75 @@ const browserModulesBuild = {
   plugins: defaultPlugins({
     babel: {
       extensions,
-      exclude: 'node_modules/**',
-      configFile: false,
-      plugins: babelPlugins,
-      presets: babelPresets({
-        // debug: true,
-        // "useBuiltIns": "usage",
-        // "corejs": 3,
-        modules: false,
-        targets: {
-          esmodules: true
-        }
-      })
+      envName: 'browserModule'
     }
-  }),
-  external: []
+  })
 }
 
-function libPath(unpkgPath, name) {
+const browserModuleWithPolyfill = {
+  input,
+  output: [
+    {
+      file: unpkgFilePath('.esm.polyfill.js'),
+      format: 'esm',
+      sourcemap: true
+    },
+    {
+      file: unpkgFilePath('.esm.polyfill.min.js'),
+      format: 'esm',
+      sourcemap: true,
+      plugins: [terser()]
+    }
+  ],
+  plugins: defaultPlugins({
+    babel: {
+      extensions,
+      envName: 'browserModulePolyfill'
+    }
+  })
+}
+
+const allBuilds = [
+  umd,
+  umdWithPolyfill,
+  browserModule,
+  browserModuleWithPolyfill
+]
+
+const envToBuildMap = {
+  umd: [umd, umdWithPolyfill],
+  browser: [browserModule, browserModuleWithPolyfill]
+}
+
+const finalBuilds = chooseBuild(envToBuildMap, process.env.BUILD) || allBuilds
+
+function libPath(path, libName) {
   return function(suffix) {
-    return unpkgPath.concat('/', name, suffix)
+    return path.concat('/', libName, suffix)
   }
 }
 
-function babelPresets(env) {
-  return ['@babel/typescript', ['@babel/preset-env', env]]
+function chooseBuild(buildMap, builds) {
+  if (!builds) {
+    return
+  }
+  const envArr = builds.split('--')
+  const result = []
+
+  if (envArr.length > 0) {
+    envArr.forEach(element => {
+      if (buildMap[element]) {
+        result.push(...buildMap[element])
+        console.log(`Found key: ${element}`)
+      }
+    })
+
+    if (result.length === 0) {
+      throw new Error(`Build configuration keys: ${builds} don't exists`)
+    }
+
+    return result
+  }
 }
 
-export default [umdBuild, browserModulesBuild, umdWithPolyFill]
+export default Promise.resolve([...finalBuilds])
