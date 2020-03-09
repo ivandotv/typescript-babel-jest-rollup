@@ -102,7 +102,11 @@ Rollup is used to compile and bundle the code for the browser. Rollup configurat
 - `umd` versions with and without polyfills
 - `esm` versions for modern browsers with and without polyfills. Version without polyfills will be referenced by `package.json` `module` field.
 
-Peer dependencies will not be bundled.
+For `umd` version babel browser targets are: `['>0.2%', 'not dead', 'not op_mini all']` (same as create-react-app)
+
+For `esm` browser targets are: `esmodules:true`
+
+**Peer dependencies will not be bundled**!
 
 ### Jest
 
