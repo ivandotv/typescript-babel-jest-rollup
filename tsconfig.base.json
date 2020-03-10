@@ -4,6 +4,7 @@
     "strict": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "isolatedModules": true
   }
 }
