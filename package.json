@@ -26,7 +26,7 @@
     "docs": "del docs/api && typedoc --theme markdown --readme none --excludePrivate --excludeNotExported --out docs/api ./src",
     "test": "cross-env  BABEL_ENV=test jest --verbose --coverage --no-cache",
     "test:watch": "cross-env BABEL_ENV=test jest --watch",
-    "test:ci": "jest --runInBand --ci --reporters=default --reporters=jest-junit --coverage --coverageDirectory=coverage",
+    "test:ci": "npm run type-check && jest --runInBand --ci --reporters=default --reporters=jest-junit --coverage --coverageDirectory=coverage",
     "type-check": "tsc -p tsconfig.check-types.json",
     "type-check:watch": "npm run type-check -- --watch",
     "build:types": "del dist/types && tsc -p tsconfig.build-types.json --outDir ./dist/types",
