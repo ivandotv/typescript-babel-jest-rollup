@@ -25,7 +25,7 @@ module.exports = {
     'no-useless-constructor': 'off',
     '@typescript-eslint/no-useless-constructor': 'off',
     'prettier/prettier': ['error'],
-    'lines-between-class-members': ['error'],
+    'lines-between-class-members': ['error', 'always'],
     'padding-line-between-statements': [
       'error',
       { blankLine: 'always', prev: '*', next: 'return' }
