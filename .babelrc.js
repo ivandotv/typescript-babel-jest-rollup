@@ -18,7 +18,7 @@ const browserReplacements = {
 module.exports = {
   presets: ['@babel/typescript', ['@babel/preset-env']],
   plugins: [
-    '@babel/proposal-class-properties', // stage-3 proposal
+    ['@babel/proposal-class-properties', { loose: true }], // stage-3 proposal
     'dev-expression',
     [
       'transform-define',
