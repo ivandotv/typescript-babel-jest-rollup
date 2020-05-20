@@ -18,7 +18,6 @@ module.exports = {
   },
   rules: {
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
     'generator-star-spacing': ['error', { before: false, after: true }],
     'space-before-function-paren': 'off',
     'no-dupe-class-members': 'off',
