@@ -37,6 +37,9 @@
     "build:watch": "npm run build:cjs -- --watch",
     "semantic-release": "semantic-release"
   },
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "jest-junit": {
     "outputDirectory": "./reports/junit",
     "outputName": "test-results.xml"
