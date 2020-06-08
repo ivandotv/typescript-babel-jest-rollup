@@ -18,6 +18,8 @@ const browserReplacements = {
 module.exports = {
   presets: ['@babel/typescript', ['@babel/preset-env']],
   plugins: [
+    ['@babel/plugin-proposal-nullish-coalescing-operator'], //node v10
+    ['@babel/plugin-proposal-optional-chaining'], // node v10
     ['@babel/proposal-class-properties', { loose: true }], // stage-3 proposal
     'dev-expression',
     [
