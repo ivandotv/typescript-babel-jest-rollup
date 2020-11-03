@@ -9,7 +9,12 @@ module.exports = {
     __DEV__: true,
     __VERSION__: true
   },
-  plugins: ['@typescript-eslint/eslint-plugin', 'prettier', 'standard'],
+  plugins: [
+    '@typescript-eslint/eslint-plugin',
+    'eslint-plugin-tsdoc',
+    'prettier',
+    'standard'
+  ],
   extends: ['prettier/standard', 'standard'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -17,6 +22,7 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    'tsdoc/syntax': 'warn',
     'no-unused-vars': 'off',
     'generator-star-spacing': ['error', { before: false, after: true }],
     'space-before-function-paren': 'off',
