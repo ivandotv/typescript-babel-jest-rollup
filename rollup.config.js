@@ -1,6 +1,7 @@
-import resolve from '@rollup/plugin-node-resolve'
+import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
-import babel from 'rollup-plugin-babel'
+import resolve from '@rollup/plugin-node-resolve'
+import filesize from 'rollup-plugin-filesize'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import { terser } from 'rollup-plugin-terser'
 // import visualizer from 'rollup-plugin-visualizer'
@@ -18,10 +19,10 @@ function defaultPlugins(config = {}) {
   return [
     resolve({ extensions }),
     peerDepsExternal(),
-    babel(config.babel || undefined),
+    babel(config.babel || { babelHelpers: 'bundled' }),
     commonjs(),
     filesize()
-    // visualizer({ template: "circlepacking" }),
+    // visualizer({ template: 'treemap' })
   ]
 }
 
@@ -46,7 +47,8 @@ const umd = {
   plugins: defaultPlugins({
     babel: {
       extensions,
-      envName: 'browser'
+      envName: 'browser',
+      babelHelpers: 'bundled'
     }
   })
 }
@@ -54,6 +56,12 @@ const umd = {
 const umdWithPolyfill = {
   input,
   output: [
+    {
+      file: unpkgFilePath('.polyfill.js'),
+      format: 'umd',
+      name: libraryName,
+      sourcemap: true
+    },
     {
       file: unpkgFilePath('.polyfill.min.js'),
       format: 'umd',
@@ -65,7 +73,8 @@ const umdWithPolyfill = {
   plugins: defaultPlugins({
     babel: {
       extensions,
-      envName: 'browserPolyfill'
+      envName: 'browserPolyfill',
+      babelHelpers: 'bundled'
     }
   })
 }
@@ -89,7 +98,8 @@ const browserModule = {
   plugins: defaultPlugins({
     babel: {
       extensions,
-      envName: 'browserModule'
+      envName: 'browserModule',
+      babelHelpers: 'bundled'
     }
   })
 }
@@ -112,7 +122,8 @@ const browserModuleWithPolyfill = {
   plugins: defaultPlugins({
     babel: {
       extensions,
-      envName: 'browserModulePolyfill'
+      envName: 'browserModulePolyfill',
+      babelHelpers: 'bundled'
     }
   })
 }
@@ -132,7 +143,7 @@ const envToBuildMap = {
 const finalBuilds = chooseBuild(envToBuildMap, process.env.BUILD) || allBuilds
 
 function libPath(path, libName) {
-  return function(suffix) {
+  return function (suffix) {
     return path.concat('/', libName, suffix)
   }
 }
@@ -145,7 +156,7 @@ function chooseBuild(buildMap, builds) {
   const result = []
 
   if (envArr.length > 0) {
-    envArr.forEach(element => {
+    envArr.forEach((element) => {
       if (buildMap[element]) {
         result.push(...buildMap[element])
         console.log(`Found key: ${element}`)
