@@ -14,6 +14,7 @@ Or you can use [deGit](https://github.com/Rich-Harris/degit) which is a very con
 
 ## Table of Contents
 
+- [Motivation](#motivation)
 - [Typescript via babel](#typescript-via-babel)
 - [Rollup configuration](#rollup)
 - [Jest](#jest)
@@ -25,6 +26,12 @@ Or you can use [deGit](https://github.com/Rich-Harris/degit) which is a very con
 - [Conventional Commits](#Conventional-commits)
 - [Generating Documentation](#generating-documentation)
 - [Renovate Bot](#renovate-bot)
+
+### Motivation
+
+Setting up a modern typescript or javascript development stack is a daunting task, there are a lot of moving parts, and sometimes the whole process seems like magic. I wanted the create a modern javascript stack from scratch so I can better familiarize myself with the tools that go into the stack.
+
+This repo is maintained and as new versions of tools are released it is updated and modified accordingly.
 
 ### Typescript via Babel
 
@@ -131,7 +138,7 @@ Prettier is set up to work together with eslint and there should be no conflicts
 
 [CircleCI](https://circleci.com/) is used for continuous integration.
 
-Tests are run for node versions 10, 12 and 13.
+Tests are run for node versions 10, 12, and 13.
 
 CircleCI is also set up to upload code coverage to [codecov.io](https://codecov.io) however you can also use [coveralls](https://coveralls.io) for code coverage ( it's currently commented out).
 
