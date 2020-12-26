@@ -31,7 +31,7 @@ Or you can use [deGit](https://github.com/Rich-Harris/degit) which is a very con
 
 Setting up a modern typescript or javascript development stack is a daunting task, there are a lot of moving parts, and sometimes the whole process seems like magic. I wanted the create a modern javascript stack from scratch so I can better familiarize myself with the tools that go into the stack.
 
-This repo is maintained and as new versions of tools are released it is updated and modified accordingly.
+This repo is maintained and as new versions of tools are being released it is updated and modified accordingly, but if you want to play it safe, I can recommend you to check out the [tsdx cli](https://tsdx.io/)
 
 ### Typescript via Babel
 
