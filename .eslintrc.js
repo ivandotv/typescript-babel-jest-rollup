@@ -15,7 +15,7 @@ module.exports = {
     'prettier',
     'standard'
   ],
-  extends: ['prettier/standard', 'standard'],
+  extends: ['prettier/standard', 'prettier/@typescript-eslint', 'standard'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     // project: './tsconfig.eslint.json',
@@ -48,7 +48,7 @@ module.exports = {
         accessibility: 'no-public'
       }
     ],
-    '@typescript-eslint/no-non-null-assertion': ['off'],
+    '@typescript-eslint/no-non-null-assertion': [true],
     '@typescript-eslint/member-delimiter-style': [
       'error',
       {
@@ -62,10 +62,7 @@ module.exports = {
         }
       }
     ],
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }
-    ]
+    '@typescript-eslint/no-unused-vars': ['off']
   },
   overrides: [
     {
