@@ -6,6 +6,12 @@
     "declaration": true,
     "isolatedModules": true,
     "noEmit": false,
-    "outDir": "./dist/types"
+    "outDir": "./dist/types",
+    "exclude": [
+      "**/node_modules",
+      "src/**/__tests__",
+      "src/**/*.test.ts",
+      "src/**/*.spec.ts"
+    ]
   }
 }
