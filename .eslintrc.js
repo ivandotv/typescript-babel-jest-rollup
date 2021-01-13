@@ -15,7 +15,7 @@ module.exports = {
     'prettier',
     'standard'
   ],
-  extends: ['prettier/standard', 'prettier/@typescript-eslint', 'standard'],
+  extends: ['standard', 'prettier/standard', 'prettier/@typescript-eslint'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     // project: './tsconfig.eslint.json',
