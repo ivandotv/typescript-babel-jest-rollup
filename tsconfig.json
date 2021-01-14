@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    // "lib": ["ESNext"],
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

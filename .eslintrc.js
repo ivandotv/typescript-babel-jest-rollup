@@ -36,7 +36,7 @@ module.exports = {
       { blankLine: 'always', prev: '*', next: 'return' }
     ],
     '@typescript-eslint/explicit-function-return-type': [
-      'error',
+      'warn',
       {
         allowExpressions: true,
         allowTypedFunctionExpressions: true
@@ -48,7 +48,7 @@ module.exports = {
         accessibility: 'no-public'
       }
     ],
-    '@typescript-eslint/no-non-null-assertion': [true],
+    '@typescript-eslint/no-non-null-assertion': [2],
     '@typescript-eslint/member-delimiter-style': [
       'error',
       {

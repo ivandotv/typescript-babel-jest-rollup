@@ -1,6 +1,8 @@
 const pkg = require('./package.json')
 
 const pkgVersion = process.env.PKG_VERSION || pkg.version
+const nodeEnv = process.env.NODE_ENV || 'production'
+
 const ignoreForTests = ['node_modules', 'src/**/*.d.ts']
 const ignoreForProduction = [
   'src/**/__tests__/**/*',
@@ -11,9 +13,12 @@ const ignoreForProduction = [
 
 //browser only replacements
 const browserReplacements = {
-  'process.env.NODE_ENV': 'production',
+  'process.env.NODE_ENV': nodeEnv,
   __VERSION__: pkgVersion
 }
+console.log('========')
+
+console.log(process.env.NODE_ENV)
 
 module.exports = {
   presets: ['@babel/typescript', ['@babel/preset-env']],
@@ -43,6 +48,24 @@ module.exports = {
       ],
       ignore: ignoreForTests,
       sourceMaps: 'inline'
+    },
+    browserDev: {
+      presets: [
+        [
+          '@babel/env',
+          {
+            targets: {
+              browsers: [
+                'last 1 chrome version',
+                'last 1 firefox version',
+                'last 1 safari version'
+              ]
+            }
+          }
+        ]
+      ],
+      plugins: [['transform-define', browserReplacements]],
+      ignore: ignoreForProduction
     },
     browser: {
       presets: [
@@ -122,8 +145,10 @@ module.exports = {
           }
         ]
       ],
-      plugins: [['transform-define', browserReplacements]],
-
+      plugins: [
+        'minify-dead-code-elimination',
+        ['transform-define', browserReplacements]
+      ],
       ignore: ignoreForProduction
     },
     esm: {
@@ -138,6 +163,10 @@ module.exports = {
             }
           }
         ]
+      ],
+      plugins: [
+        'minify-dead-code-elimination',
+        ['transform-define', browserReplacements]
       ],
       ignore: ignoreForProduction
     }
