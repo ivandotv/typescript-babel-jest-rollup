@@ -4,9 +4,10 @@ import resolve from '@rollup/plugin-node-resolve'
 import filesize from 'rollup-plugin-filesize'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import { terser } from 'rollup-plugin-terser'
-import visualizer from 'rollup-plugin-visualizer'
+import command from 'rollup-plugin-command'
+// import visualizer from 'rollup-plugin-visualizer'
 import pkg from './package.json'
-import fs from 'fs'
+import { promises as fs } from 'fs'
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
@@ -23,13 +24,16 @@ function defaultPlugins(config = {}) {
     peerDepsExternal(),
     babel(config.babel || { babelHelpers: 'bundled' }),
     commonjs(),
-    filesize(),
-    visualizer({ template: 'treemap' })
+    filesize()
+    // visualizer({ template: 'treemap' })
   ]
 }
 console.log('==========================')
 console.log(process.env.NODE_ENV)
-const cjsBrowserDev = {
+console.log('build >>>>>>')
+
+console.log(process.env.BUILD)
+const browserDev = {
   input,
   output: [
     {
@@ -45,11 +49,10 @@ const cjsBrowserDev = {
       envName: 'browserDev',
       babelHelpers: 'bundled'
     }
-  }) //TODO -ovo ide kasnije
-  // ).concat([command(() => createCjsBrowserIndex(libraryName), { wait: true })])
+  })
 }
 
-const cjsBrowserProd = {
+const browser = {
   input,
   output: [
     {
@@ -66,8 +69,7 @@ const cjsBrowserProd = {
       envName: 'browser',
       babelHelpers: 'bundled'
     }
-  }) //TODO -ovo ide kasnije
-  // ).concat([command(() => createCjsBrowserIndex(libraryName), { wait: true })])
+  }).concat([command(() => createCjsBrowserIndex(libraryName), { wait: true })])
 }
 
 // umd build for the browser
@@ -181,7 +183,7 @@ const allBuilds = [
 
 const envToBuild = {
   // cjs: [cjsBrowserDev, cjsBrowserProd],
-  cjs: [cjsBrowserDev],
+  cjs: [browserDev, browser],
   umd: [umd, umdWithPolyfill],
   browser: [browserModule, browserModuleWithPolyfill]
 }

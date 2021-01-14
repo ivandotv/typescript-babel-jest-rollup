@@ -13,7 +13,8 @@ const ignoreForProduction = [
 
 //browser only replacements
 const browserReplacements = {
-  'process.env.NODE_ENV': 'production',
+  // 'process.env.NODE_ENV': 'production',
+  'process.env.NODE_ENV': nodeEnv,
   __VERSION__: pkgVersion
 }
 console.log('========')
@@ -49,11 +50,13 @@ module.exports = {
       ignore: ignoreForTests,
       sourceMaps: 'inline'
     },
-    browserDev: {
+    browserWatch: {
       presets: [
         [
           '@babel/env',
           {
+            useBuiltIns: 'usage',
+            corejs: 3,
             targets: {
               browsers: [
                 'last 1 chrome version',
@@ -72,6 +75,8 @@ module.exports = {
         [
           '@babel/env',
           {
+            useBuiltIns: 'usage',
+            corejs: 3,
             targets: {
               browsers: ['>0.2%', 'not dead', 'not op_mini all']
             }
@@ -80,6 +85,22 @@ module.exports = {
       ],
       plugins: [['transform-define', browserReplacements]],
       ignore: ignoreForProduction
+    },
+    browserDev: {
+      presets: [
+        [
+          '@babel/env',
+          {
+            useBuiltIns: 'usage',
+            corejs: 3,
+            targets: {
+              browsers: ['>0.2%', 'not dead', 'not op_mini all']
+            }
+          }
+        ]
+      ],
+      ignore: ignoreForProduction,
+      plugins: [['transform-define', browserReplacements]]
     },
     browserPolyfill: {
       presets: [
