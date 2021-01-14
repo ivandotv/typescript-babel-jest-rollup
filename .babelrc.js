@@ -13,7 +13,7 @@ const ignoreForProduction = [
 
 //browser only replacements
 const browserReplacements = {
-  'process.env.NODE_ENV': nodeEnv,
+  'process.env.NODE_ENV': 'production',
   __VERSION__: pkgVersion
 }
 console.log('========')
