@@ -28,11 +28,7 @@ function defaultPlugins(config = {}) {
     // visualizer({ template: 'treemap' })
   ]
 }
-console.log('==========================')
-console.log(process.env.NODE_ENV)
-console.log('build >>>>>>')
 
-console.log(process.env.BUILD)
 const browserDev = {
   input,
   output: [
@@ -217,7 +213,7 @@ function chooseBuild(buildMap, builds) {
   }
 }
 
-async function createCjsBrowserIndex(libName) {
+async function createIndexFile(libName) {
   const file = await fs.readFile('./scripts/templates/cjs-browser.js', {
     encoding: 'utf-8'
   })

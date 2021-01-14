@@ -166,10 +166,7 @@ module.exports = {
           }
         ]
       ],
-      plugins: [
-        'minify-dead-code-elimination',
-        ['transform-define', browserReplacements]
-      ],
+      plugins: [['transform-define', browserReplacements]],
       ignore: ignoreForProduction
     },
     esm: {

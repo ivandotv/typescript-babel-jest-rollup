@@ -1,6 +1,5 @@
 const pkg = require('../package.json')
 const { series } = require('async')
-const path = require('path')
 const { spawn } = require('child_process')
 const { promises: fs } = require('fs')
 
