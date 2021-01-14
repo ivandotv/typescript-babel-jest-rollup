@@ -4,8 +4,11 @@ import resolve from '@rollup/plugin-node-resolve'
 import filesize from 'rollup-plugin-filesize'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import { terser } from 'rollup-plugin-terser'
+import command from 'rollup-plugin-command'
 // import visualizer from 'rollup-plugin-visualizer'
 import pkg from './package.json'
+import { promises as fs } from 'fs'
+
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
 const libraryName = pkg.name
@@ -24,6 +27,46 @@ function defaultPlugins(config = {}) {
     filesize()
     // visualizer({ template: 'treemap' })
   ]
+}
+
+const browserDev = {
+  input,
+  output: [
+    {
+      file: libPath('./dist/cjs', libraryName)('.development.js'),
+      format: 'cjs',
+      name: libraryName,
+      sourcemap: true
+    }
+  ],
+  plugins: defaultPlugins({
+    babel: {
+      extensions,
+      envName: 'browserDev',
+      babelHelpers: 'bundled'
+    }
+  })
+}
+
+const browser = {
+  input,
+  output: [
+    {
+      file: libPath('./dist/cjs/', libraryName)('.production.min.js'),
+      format: 'cjs',
+      name: libraryName,
+      sourcemap: true,
+      plugins: [terser()]
+    }
+  ],
+  plugins: defaultPlugins({
+    babel: {
+      extensions,
+      envName: 'browser',
+      babelHelpers: 'bundled'
+    }
+  })
+  // .concat([command(() => createCjsBrowserIndex(libraryName), { wait: true })])
 }
 
 // umd build for the browser
@@ -127,20 +170,19 @@ const browserModuleWithPolyfill = {
     }
   })
 }
-
-const allBuilds = [
-  umd,
-  umdWithPolyfill,
-  browserModule,
-  browserModuleWithPolyfill
-]
-
-const envToBuildMap = {
-  umd: [umd, umdWithPolyfill],
-  browser: [browserModule, browserModuleWithPolyfill]
+const envToBuild = {
+  cjsBrowserDev: [browserDev],
+  cjsBrowserProd: [browser],
+  unpkg: [umd, umdWithPolyfill, browserModule, browserModuleWithPolyfill]
 }
 
-const finalBuilds = chooseBuild(envToBuildMap, process.env.BUILD) || allBuilds
+let allBuilds = []
+
+for (const [key, value] of Object.entries(envToBuild)) {
+  allBuilds = allBuilds.concat(value)
+}
+
+const finalBuilds = chooseBuild(envToBuild, process.env.BUILD) || allBuilds
 
 function libPath(path, libName) {
   return function (suffix) {
@@ -159,7 +201,7 @@ function chooseBuild(buildMap, builds) {
     envArr.forEach((element) => {
       if (buildMap[element]) {
         result.push(...buildMap[element])
-        console.log(`Found key: ${element}`)
+        console.log(`Will build: ${element}`)
       }
     })
 
@@ -169,6 +211,17 @@ function chooseBuild(buildMap, builds) {
 
     return result
   }
+}
+
+async function createIndexFile(libName) {
+  const file = await fs.readFile('./scripts/templates/cjs-browser.js', {
+    encoding: 'utf-8'
+  })
+
+  const replaced = file.replace(/__LIBRARY_NAME__/gm, libName)
+  console.log(replaced)
+
+  return await fs.writeFile('./dist/cjs/index.js', replaced)
 }
 
 export default Promise.resolve([...finalBuilds])
