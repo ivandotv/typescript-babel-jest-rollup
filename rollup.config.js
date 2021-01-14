@@ -69,7 +69,8 @@ const browser = {
       envName: 'browser',
       babelHelpers: 'bundled'
     }
-  }).concat([command(() => createCjsBrowserIndex(libraryName), { wait: true })])
+  })
+  // .concat([command(() => createCjsBrowserIndex(libraryName), { wait: true })])
 }
 
 // umd build for the browser
@@ -173,19 +174,16 @@ const browserModuleWithPolyfill = {
     }
   })
 }
-
-const allBuilds = [
-  umd,
-  umdWithPolyfill,
-  browserModule,
-  browserModuleWithPolyfill
-]
-
 const envToBuild = {
-  // cjs: [cjsBrowserDev, cjsBrowserProd],
-  cjs: [browserDev, browser],
-  umd: [umd, umdWithPolyfill],
-  browser: [browserModule, browserModuleWithPolyfill]
+  cjsBrowserDev: [browserDev],
+  cjsBrowserProd: [browser],
+  unpkg: [umd, umdWithPolyfill, browserModule, browserModuleWithPolyfill]
+}
+
+let allBuilds = []
+
+for (const [key, value] of Object.entries(envToBuild)) {
+  allBuilds = allBuilds.concat(value)
 }
 
 const finalBuilds = chooseBuild(envToBuild, process.env.BUILD) || allBuilds

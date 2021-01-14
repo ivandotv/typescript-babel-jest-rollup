@@ -1,8 +1,8 @@
 const pkg = require('../package.json')
-console.log('pkg version ', pkg.version)
 const { series } = require('async')
 const path = require('path')
 const { spawn } = require('child_process')
+const { promises: fs } = require('fs')
 
 const del = require('del')
 
@@ -13,45 +13,43 @@ const del = require('del')
 
 series([
   (cb) => {
-    process.env.NODE_ENV = 'production'
-    process.env.BABEL_ENV = 'cjs'
-    console.log('set "PROD')
-    console.log('----- path:: ', path.resolve('../'))
     cb()
   },
-  function (callback) {
-    // "build:cjs": "cross-env BABEL_ENV=cjs NODE_ENV=production babel src --out-dir dist/cjs --extensions \".ts,.tsx,js,jsx\" --source-maps --verbose --out-file-extension .production.js",
-    spawn(
-      'npx',
-      [
-        'babel-cli',
-        'src --out-dir dist/cjs --extensions ".ts,.tsx,js,jsx" --source-maps --verbose --out-file-extension .production.js'
-      ],
-      { stdio: 'inherit', shell: true }
-    ).on('exit', (code) => {
-      console.log(`child process exited with code ${code}`)
-      callback(code)
-    })
+  function (cb) {
+    // build browser cjs dev version
+    // "build:browser:cjs:dev": "del dist/cjs && rollup -c --environment BUILD:cjs,NODE_ENV:development",
+    process.env.NODE_ENV = 'development'
+    process.env.BUILD = 'cjsBrowserDev'
+    spawn('npx', ['rollup', '-c'], { stdio: 'inherit', shell: true }).on(
+      'exit',
+      (code) => {
+        cb(code)
+      }
+    )
   },
   (cb) => {
-    process.env.NODE_ENV = 'development'
-    console.log('set "DEV"')
-    cb()
+    // build browser cjs prod version
+    // "build:browser:cjs:prod": "del dist/cjs && rollup -c --environment BUILD:cjs,NODE_ENV:production",
+    process.env.NODE_ENV = 'production'
+    process.env.BUILD = 'cjsBrowserProd'
+    spawn('npx', ['rollup', '-c'], { stdio: 'inherit', shell: true }).on(
+      'exit',
+      (code) => {
+        cb(code)
+      }
+    )
   },
-  function (callback) {
-    const ls = spawn('npm', ['run', 'build:cjsd'], { stdio: 'inherit' })
-    ls.on('exit', (code) => {
-      console.log(`>>>>>> child process exited with code ${code}`)
-      callback()
-    })
+  async (cb) => {
+    return await createIndexFile(pkg.name)
   }
 ])
-/*
-    Development build for the brower
 
-*/
-// build dev version - pure babel
+async function createIndexFile(libName) {
+  const file = await fs.readFile('./scripts/cjs-browser-template.js', {
+    encoding: 'utf-8'
+  })
 
-// build production version - rollup
+  const replaced = file.replace(/__LIBRARY_NAME__/gm, libName)
 
-// dodati specijalan index.js
+  return await fs.writeFile('./dist/cjs/index.js', replaced)
+}
