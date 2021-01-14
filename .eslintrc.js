@@ -36,7 +36,7 @@ module.exports = {
       { blankLine: 'always', prev: '*', next: 'return' }
     ],
     '@typescript-eslint/explicit-function-return-type': [
-      'warn',
+      'error',
       {
         allowExpressions: true,
         allowTypedFunctionExpressions: true
