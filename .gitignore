@@ -7,3 +7,4 @@ node_modules
 /reports
 # rollup visualizer artifacts
 stats.html
+scratch
