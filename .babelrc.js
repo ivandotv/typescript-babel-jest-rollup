@@ -1,7 +1,16 @@
 const pkg = require('./package.json')
+const { execSync } = require('child_process')
 
 const pkgVersion = process.env.PKG_VERSION || pkg.version
 const nodeEnv = process.env.NODE_ENV || 'production'
+
+const buildDate = execSync('git show -s --format=%ci HEAD')
+  .toString()
+  .replace(/[\r\n]+$/, '')
+
+const commitSha = execSync('git rev-parse --short HEAD')
+  .toString()
+  .replace(/[\r\n]+$/, '')
 
 const ignoreForTests = ['node_modules', 'src/**/*.d.ts']
 const ignoreForProduction = [
@@ -13,13 +22,11 @@ const ignoreForProduction = [
 
 //browser only replacements
 const browserReplacements = {
-  // 'process.env.NODE_ENV': 'production',
   'process.env.NODE_ENV': nodeEnv,
-  __VERSION__: pkgVersion
+  __VERSION__: pkgVersion,
+  __BUILD_DATE__: buildDate,
+  __COMMIT_SHA__: commitSha
 }
-console.log('========')
-
-console.log(process.env.NODE_ENV)
 
 module.exports = {
   presets: ['@babel/typescript', ['@babel/preset-env']],

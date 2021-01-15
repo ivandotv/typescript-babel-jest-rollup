@@ -66,7 +66,6 @@ const browser = {
       babelHelpers: 'bundled'
     }
   })
-  // .concat([command(() => createCjsBrowserIndex(libraryName), { wait: true })])
 }
 
 // umd build for the browser
@@ -122,7 +121,7 @@ const umdWithPolyfill = {
   })
 }
 
-// build for browsers as module
+// build for browser as module
 const browserModule = {
   input,
   output: [
@@ -211,17 +210,6 @@ function chooseBuild(buildMap, builds) {
 
     return result
   }
-}
-
-async function createIndexFile(libName) {
-  const file = await fs.readFile('./scripts/templates/cjs-browser.js', {
-    encoding: 'utf-8'
-  })
-
-  const replaced = file.replace(/__LIBRARY_NAME__/gm, libName)
-  console.log(replaced)
-
-  return await fs.writeFile('./dist/cjs/index.js', replaced)
 }
 
 export default Promise.resolve([...finalBuilds])
