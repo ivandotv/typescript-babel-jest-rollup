@@ -16,7 +16,6 @@ series([
   },
   function (cb) {
     // build browser cjs dev version
-    // "build:browser:cjs:dev": "del dist/cjs && rollup -c --environment BUILD:cjs,NODE_ENV:development",
     process.env.NODE_ENV = 'development'
     process.env.BUILD = 'cjsBrowserDev'
     spawn('npx', ['rollup', '-c'], { stdio: 'inherit', shell: true }).on(
@@ -28,7 +27,6 @@ series([
   },
   (cb) => {
     // build browser cjs prod version
-    // "build:browser:cjs:prod": "del dist/cjs && rollup -c --environment BUILD:cjs,NODE_ENV:production",
     process.env.NODE_ENV = 'production'
     process.env.BUILD = 'cjsBrowserProd'
     spawn('npx', ['rollup', '-c'], { stdio: 'inherit', shell: true }).on(
