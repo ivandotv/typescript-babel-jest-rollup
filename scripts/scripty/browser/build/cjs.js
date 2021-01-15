@@ -1,4 +1,6 @@
-const pkg = require('../package.json')
+#!/bin/env node
+
+const pkg = require('../../../../package.json')
 const { series } = require('async')
 const { spawn } = require('child_process')
 const { promises: fs } = require('fs')
@@ -18,17 +20,6 @@ series([
     // build browser cjs dev version
     process.env.NODE_ENV = 'development'
     process.env.BUILD = 'cjsBrowserDev'
-    spawn('npx', ['rollup', '-c'], { stdio: 'inherit', shell: true }).on(
-      'exit',
-      (code) => {
-        cb(code)
-      }
-    )
-  },
-  (cb) => {
-    // build browser cjs prod version
-    process.env.NODE_ENV = 'production'
-    process.env.BUILD = 'cjsBrowserProd'
     spawn('npx', ['rollup', '-c'], { stdio: 'inherit', shell: true }).on(
       'exit',
       (code) => {
