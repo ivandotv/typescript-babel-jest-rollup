@@ -17,7 +17,7 @@ jobs:
       - upload-coverage
   node-v13:
     docker:
-      - image: circleci/node:13
+      - image: circleci/node:14
     steps:
       - test
 commands:
@@ -29,19 +29,19 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum "yarn-lock.json" }}
       - run:
           name: install-dependancies
-          command: npm ci
+          command: yarn install
       - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum "yarn-lock.json" }}
           paths:
-            - $HOME/.npm
+            - $HOME/.yarn
       - run:
           name: unit test
           command: |
             mkdir -p ./reports/junit
-            npm run ci:test
+            yarn test-ci
       - store_test_results:
           path: reports/junit/
   upload-coverage:
@@ -55,4 +55,4 @@ workflows:
     jobs:
       - node-v10
       - node-v12
-      - node-v13
+      - node-v14
