@@ -29,12 +29,12 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "yarn-lock.json" }}
+          key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
           name: install-dependancies
           command: yarn install
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn-lock.json" }}
+          key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - $HOME/.yarn
       - run:
