@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['10', '12', '13']
+        node: ['10', '12', '14']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,27 +23,27 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
 
       - name: Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install
-      - run: npm run test:ci
+      - run: yarn install
+      - run: yarn test-ci
         env:
           CI: true
 
       - name: Generate Code Coverage
-        if: matrix.node == 12
+        if: matrix.node == 14
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           file: ./coverage/coverage-final.json
       # - name: 'Publish to NPM'
-      #   if: github.event_name == 'push' && github.repository == 'ivandotv/packageName' && matrix.node == 12
+      #   if: github.event_name == 'push' && github.repository == 'ivandotv/packageName' && matrix.node == 14
       #   run: npx semantic-release
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
