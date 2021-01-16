@@ -1,3 +1,8 @@
 #!/bin/env bash
 
-del dist/cjs && BABEL_ENV=cjs NODE_ENV=development babel src --out-dir dist/cjs --extensions \".ts,.tsx,js,jsx\" --source-maps --watch
+del dist/cjs
+
+export BABEL_ENV=cjs
+export NODE_ENV=development
+
+babel src --out-dir dist/cjs --extensions .ts,.tsx,.js,.jsx --source-maps --watch
