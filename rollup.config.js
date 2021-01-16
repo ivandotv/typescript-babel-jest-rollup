@@ -4,10 +4,8 @@ import resolve from '@rollup/plugin-node-resolve'
 import filesize from 'rollup-plugin-filesize'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import { terser } from 'rollup-plugin-terser'
-import command from 'rollup-plugin-command'
 // import visualizer from 'rollup-plugin-visualizer'
 import pkg from './package.json'
-import { promises as fs } from 'fs'
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
@@ -193,7 +191,7 @@ function chooseBuild(buildMap, builds) {
   if (!builds) {
     return
   }
-  const envArr = builds.split('--')
+  const envArr = builds.split(',')
   const result = []
 
   if (envArr.length > 0) {

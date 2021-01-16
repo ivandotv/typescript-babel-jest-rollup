@@ -13,13 +13,10 @@ const del = require('del')
 })()
 
 series([
-  (cb) => {
-    cb()
-  },
   function (cb) {
-    // build browser cjs dev version
+    // build browser cjs development and production versions
     process.env.NODE_ENV = 'development'
-    process.env.BUILD = 'cjsBrowserDev'
+    process.env.BUILD = 'cjsBrowserDev,cjsBrowserProd'
     spawn('npx', ['rollup', '-c'], { stdio: 'inherit', shell: true }).on(
       'exit',
       (code) => {
