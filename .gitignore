@@ -8,3 +8,4 @@ node_modules
 # rollup visualizer artifacts
 stats.html
 scratch
+*.tsbuildinfo
