@@ -14,13 +14,12 @@ module.exports = {
   plugins: [
     '@typescript-eslint/eslint-plugin',
     'eslint-plugin-tsdoc',
-    'prettier',
-    'standard'
+    'prettier'
   ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier',
     'prettier/@typescript-eslint'
   ],
