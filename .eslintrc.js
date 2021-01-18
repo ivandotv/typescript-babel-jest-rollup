@@ -17,10 +17,20 @@ module.exports = {
     'prettier',
     'standard'
   ],
-  extends: ['standard', 'prettier/standard', 'prettier/@typescript-eslint'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'prettier',
+    'prettier/@typescript-eslint'
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    // project: './tsconfig.eslint.json',
+    /* enabling "project" field is a performance hit
+      https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/TYPED_LINTING.md#performance
+    */
+    // tsconfigRootDir: __dirname,
+    // project: ['./tsconfig.check-types.json'],
     sourceType: 'module'
   },
   rules: {
