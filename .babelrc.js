@@ -28,6 +28,10 @@ const browserReplacements = {
   __COMMIT_SHA__: commitSha
 }
 
+const serverPlugins = [['transform-define', browserReplacements]].concat(
+  'production' === nodeEnv ? 'minify-dead-code-elimination' : []
+)
+
 module.exports = {
   presets: ['@babel/typescript', '@babel/preset-env'],
   plugins: [
@@ -173,10 +177,7 @@ module.exports = {
           }
         ]
       ],
-      plugins: [
-        ['transform-define', browserReplacements],
-        'production' === nodeEnv ? 'minify-dead-code-elimination' : undefined
-      ],
+      plugins: serverPlugins,
       ignore: ignoreForProduction
     },
     esm: {
@@ -192,10 +193,7 @@ module.exports = {
           }
         ]
       ],
-      plugins: [
-        ['transform-define', browserReplacements],
-        'production' === nodeEnv ? 'minify-dead-code-elimination' : undefined
-      ],
+      plugins: serverPlugins,
       ignore: ignoreForProduction
     }
   }

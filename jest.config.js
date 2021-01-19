@@ -11,7 +11,9 @@ module.exports = {
   ],
   globals: {
     __DEV__: true,
-    __VERSION__: true
+    __VERSION__: true,
+    __BUILD_DATE__: true,
+    __COMMIT_SHA__: true
   },
   coverageThreshold: {
     global: {
