@@ -173,7 +173,10 @@ module.exports = {
           }
         ]
       ],
-      plugins: [['transform-define', browserReplacements]],
+      plugins: [
+        ['transform-define', browserReplacements],
+        'production' === nodeEnv ? 'minify-dead-code-elimination' : undefined
+      ],
       ignore: ignoreForProduction
     },
     esm: {
@@ -189,7 +192,10 @@ module.exports = {
           }
         ]
       ],
-      plugins: [['transform-define', browserReplacements]],
+      plugins: [
+        ['transform-define', browserReplacements],
+        'production' === nodeEnv ? 'minify-dead-code-elimination' : undefined
+      ],
       ignore: ignoreForProduction
     }
   }

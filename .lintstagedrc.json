@@ -3,5 +3,5 @@
     "eslint --fix",
     "prettier --write"
   ],
-  "tests/**/*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"]
+  "tests/**/*.{js,jsx,ts,tsx,json}": ["eslint --fix", "prettier --write"]
 }
