@@ -19,7 +19,6 @@
     "test": "tests"
   },
   "scripts": {
-    "prepublishOnly": "yarn build",
     "commit": "yarn git-cz",
     "fix:src": "eslint --fix \"src/**/\" \"tests/**",
     "fix:tests": "eslint --fix \"tests/**",
@@ -39,7 +38,8 @@
     "browser:build:cjs": "node scripts/browser-cjs.js",
     "browser:build": "yarn type:build && yarn browser:build:csj && yarn browser:build:unpkg",
     "browser:watch": "del dist/cjs && cross-env BABEL_ENV=browserWatch NODE_ENV=development babel src --out-dir dist/cjs --extensions .ts,.tsx,.js,.jsx --source-maps --watch",
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "publish": "yarn build && yarn semantic-release"
   },
   "engines": {
     "node": ">=10.0.0"

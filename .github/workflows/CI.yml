@@ -45,9 +45,10 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           file: ./coverage/coverage-final.json
+
       # - name: 'Publish to NPM'
       #   if: github.event_name == 'push' && github.repository == 'ivandotv/packageName' && matrix.node == 14
-      #   run: npx semantic-release
+      #   run: yarn publish
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
