@@ -5,9 +5,9 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Main",
       "type": "node",
       "request": "launch",
-      "name": "Main",
       "program": "${workspaceFolder}/src/index.ts",
       // "preLaunchTask": "npm: build:cjs",
       "outFiles": ["${workspaceFolder}/dist/cjs/**/*.js"],
@@ -17,9 +17,9 @@
       ]
     },
     {
+      "name": "Current test file",
       "type": "node",
       "request": "launch",
-      "name": "Current test file",
       "cwd": "${workspaceRoot}",
       "program": "${workspaceFolder}/node_modules/.bin/jest",
       "args": [
@@ -38,9 +38,9 @@
       ]
     },
     {
+      "name": "Nodemon",
       "type": "node",
       "request": "attach",
-      "name": "Nodemon",
       "processId": "${command:PickProcess}",
       "restart": true,
       "protocol": "inspector",
