@@ -1,4 +1,4 @@
-const pkg = require('../../../../package.json')
+const pkg = require('../package.json')
 const { series } = require('async')
 const { spawn } = require('child_process')
 const { promises: fs } = require('fs')
