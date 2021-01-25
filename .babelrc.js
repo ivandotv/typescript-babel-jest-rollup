@@ -163,6 +163,23 @@ module.exports = {
       plugins: [['transform-define', browserReplacements]],
       ignore: ignoreForProduction
     },
+    cjsWatch: {
+      // commonjs for node
+      presets: [
+        [
+          '@babel/env',
+          {
+            // debug: true,
+            modules: 'cjs',
+            targets: {
+              node: 'current'
+            }
+          }
+        ]
+      ],
+      plugins: serverPlugins,
+      ignore: ignoreForProduction
+    },
     cjs: {
       // commonjs for node
       presets: [
@@ -172,7 +189,7 @@ module.exports = {
             // debug: true,
             modules: 'cjs',
             targets: {
-              node: 10 // es2018
+              node: 12 // es2018
             }
           }
         ]
