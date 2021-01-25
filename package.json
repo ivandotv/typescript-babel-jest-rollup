@@ -33,12 +33,12 @@
     "server:build:cjs": "del dist/cjs && cross-env BABEL_ENV=cjs NODE_ENV=production babel src --out-dir dist/cjs --extensions .ts,.tsx,.js,.jsx --source-maps",
     "server:build:esm": "del dist/esm && cross-env BABEL_ENV=esm NODE_ENV=production babel src --out-dir dist/esm --extensions .ts,.tsx,.js,.jsx --source-maps",
     "server:build": "yarn type:build && yarn server:build:cjs && yarn server:build:esm",
-    "server:watch": "del dist/cjs && cross-env BABEL_ENV=cjs NODE_ENV=development babel src --out-dir dist/cjs --extensions .ts,.tsx,.js,.jsx --source-maps --watch",
+    "server:watch": "del dist/cjs && cross-env BABEL_ENV=cjsWatch NODE_ENV=development babel src --out-dir dist/cjs --extensions .ts,.tsx,.js,.jsx --source-maps --watch",
     "browser:build:unpkg": "del dist/unpkg && rollup -c --environment BUILD:unpkg",
     "browser:build:cjs": "node scripts/browser-cjs.js",
-    "browser:build": "yarn type:build && yarn browser:build:csj && yarn browser:build:unpkg",
+    "browser:build": "yarn type:build && yarn browser:build:cjs && yarn browser:build:unpkg",
     "browser:watch": "del dist/cjs && cross-env BABEL_ENV=browserWatch NODE_ENV=development babel src --out-dir dist/cjs --extensions .ts,.tsx,.js,.jsx --source-maps --watch",
-    "build": "node scripts/build.js",
+    "build": "yarn type:check && yarn test && node scripts/build.js",
     "publish": "yarn build && yarn semantic-release"
   },
   "engines": {
