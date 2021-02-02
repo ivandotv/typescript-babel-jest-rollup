@@ -5,14 +5,14 @@ const { promises: fs } = require('fs')
 
 const buildTarget = pkg.buildTarget
 
-if (!buildTarget) {
-  throw new Error(`key: "buildTarget" in package.json not found.
+if (!buildTarget || buildTarget.length === 0) {
+  throw new Error(`key: "buildTarget" in package.json not found or empty.
   Please add "buildTarget" key to package.json with the value of "browser" or "server".
   `)
 }
 
 // if build target browser
-console.log('👷 build target:', buildTarget)
+console.log('👷 build target: ', buildTarget)
 
 if (buildTarget === 'server') {
   spawn('yarn', ['server:build'], {
