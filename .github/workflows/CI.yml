@@ -48,7 +48,7 @@ jobs:
 
       # - name: 'Publish to NPM'
       #   if: github.event_name == 'push' && github.repository == 'ivandotv/packageName' && matrix.node == 14
-      #   run: yarn publish
+      #   run: yarn release
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

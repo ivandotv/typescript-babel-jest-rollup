@@ -23,7 +23,8 @@ Or you can use [deGit](https://github.com/Rich-Harris/degit) which is a very con
 - [Semantic Release](#semantic-release)
 - [Generating Documentation](#generating-documentation)
 - [Renovate Bot](#renovate-bot)
-- [Build and Publish](#build-and-publish)
+- [Build](#build)
+- [Publish](#publish)
 
 ### Motivation
 
@@ -206,6 +207,10 @@ Currently, documentation will be generated into `docs/api` directory and it is g
 
 There is a renovate bot configuration file for automatically updating dependencies. Make sure to active `renovate bot` first via [github marketplace.](https://github.com/marketplace/renovate)
 
-### Build and Publish
+### Build
 
 For the final build just run `yarn build` and it will type check Typescript files, test all the files, and finally depending on the `buildTarget` from the `package.json` file it will build the [appropriate bundles.](#build-targets)
+
+### Publish
+
+Publishing is done via `yarn release` this task will first call the `build` task and then it will call `semantic-release` to handle the publishing to NPM.
