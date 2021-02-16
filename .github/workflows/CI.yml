@@ -47,7 +47,7 @@ jobs:
           file: ./coverage/coverage-final.json
 
       # - name: 'Publish to NPM'
-      #   if: github.event_name == 'push' && github.repository == 'ivandotv/packageName' && matrix.node == 14
+      #   if: github.event_name == 'push' && github.repository == 'ivandotv/untilted' && matrix.node == 14
       #   run: yarn release
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

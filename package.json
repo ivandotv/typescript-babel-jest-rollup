@@ -6,7 +6,7 @@
   "description": "",
   "buildTarget": "server",
   "main": "dist/cjs/index.js",
-  "module": "dist/unpkg/untilted.esm.js",
+  "module": "dist/esm/index.js",
   "unpkg": "dist/unpkg/untilted.js",
   "jsdelivr": "dist/unpkg/untilted.js",
   "sideEffects": true,
