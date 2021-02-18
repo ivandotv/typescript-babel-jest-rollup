@@ -8,7 +8,7 @@ on:
       - master
 jobs:
   build:
-    name: Node ${{ matrix.node }} unit tests
+    name: Node unit tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,8 +34,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - run: yarn install --frozen-lockfile
-      - run: yarn test:ci
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run tests
+        run: |
+          yarn type:check
+          yarn test:ci
         env:
           CI: true
 
@@ -48,7 +54,9 @@ jobs:
 
       # - name: 'Publish to NPM'
       #   if: github.event_name == 'push' && github.repository == 'ivandotv/untilted' && matrix.node == 14
-      #   run: yarn release
+      #   run: |
+      #     node scripts/build.js
+      #     yarn semantic-release
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
