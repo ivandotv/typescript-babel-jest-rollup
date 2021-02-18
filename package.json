@@ -39,7 +39,7 @@
     "browser:build": "yarn type:build && yarn browser:build:cjs && yarn browser:build:unpkg",
     "browser:watch": "del dist/cjs && cross-env BABEL_ENV=browserWatch NODE_ENV=development babel src --out-dir dist/cjs --extensions .ts,.tsx,.js,.jsx --source-maps --watch",
     "build": "yarn type:check && yarn test && node scripts/build.js",
-    "release": "yarn build && yarn semantic-release"
+    "prepublishOnly": "yarn build"
   },
   "engines": {
     "node": ">=10.0.0"
