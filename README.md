@@ -213,4 +213,4 @@ For the final build just run `yarn build` and it will type check Typescript file
 
 ### Publish
 
-Publishing is done via `yarn release` this task will first call the `build` task and then it will call `semantic-release` to handle the publishing to NPM.
+Manual publishing is done via `yarn publish` this task will go through regular NPM publish steps. When publishing via continuous integration, a `semantic-release` package will be used. Both versions will call [`prepublishOnly` life cycle script](https://docs.npmjs.com/cli/v7/using-npm/scripts#life-cycle-scripts).
