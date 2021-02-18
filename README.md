@@ -163,8 +163,7 @@ CircleCI is also set up to upload code coverage to [codecov.io](https://codecov.
 
 Same as CircleCI.
 Github actions can also run `semantic-release` and automatically publish the library to NPM.
-There is also a `manual-publish` workflow that can be triggered manually (from github UI) to publish the library.
-Don't forget to set up NPM tokens (via GitHub secrets).
+Don't forget to set up NPM and code coverage tokens (via GitHub secrets).
 
 ### Git Hooks
 
