@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn install --frozen-lockfile
-      - run: yarn test-ci
+      - run: yarn test:ci
         env:
           CI: true
 
@@ -42,8 +42,8 @@ jobs:
           file: ./coverage/coverage-final.json
 
       - name: 'Publish to NPM'
-        if: github.event_name == 'push' && github.repository == 'ivandotv/untilted' && matrix.node == 14
-        run: yarn publish
+        if: matrix.node == 14
+        run: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
