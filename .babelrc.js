@@ -17,7 +17,8 @@ const ignoreForProduction = [
   'src/**/__tests__/**/*',
   'src/**/*.spec.ts',
   'src/**/*.test.ts',
-  'src/**/*.d.ts'
+  'src/**/*.d.ts',
+  'src/scratch/**'
 ]
 
 //browser only replacements
