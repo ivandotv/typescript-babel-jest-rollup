@@ -20,8 +20,8 @@
   },
   "scripts": {
     "commit": "yarn git-cz",
-    "fix:src": "eslint --fix \"src/**/\" \"tests/**",
-    "fix:tests": "eslint --fix \"tests/**",
+    "fix:src": "eslint --fix \"src/**/\" \"tests/**\"",
+    "fix:tests": "eslint --fix \"tests/**\"",
     "fix": "yarn fix:src && yarn fix:tests",
     "docs": "del docs/api && typedoc --theme markdown --readme none --excludePrivate --excludeNotExported --out docs/api ./src",
     "test": "cross-env BABEL_ENV=test jest --verbose --coverage --no-cache",
