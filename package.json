@@ -29,7 +29,7 @@
     "test:ci": "yarn type:check && cross-env BABEL_ENV=test jest --runInBand --ci --reporters=default --reporters=jest-junit --coverage --coverageDirectory=coverage",
     "type:check": "tsc -p tsconfig.check-types.json",
     "type:watch": "yarn type:check --watch",
-    "type:build": "del dist/types && tsc -p tsconfig.build-types.json",
+    "type:build": "del dist/types && del .buildcache && tsc -p tsconfig.build-types.json",
     "server:build:cjs": "del dist/cjs && cross-env BABEL_ENV=cjs NODE_ENV=production babel src --out-dir dist/cjs --extensions .ts,.tsx,.js,.jsx --source-maps",
     "server:build:esm": "del dist/esm && cross-env BABEL_ENV=esm NODE_ENV=production babel src --out-dir dist/esm --extensions .ts,.tsx,.js,.jsx --source-maps",
     "server:build": "yarn type:build && yarn server:build:cjs && yarn server:build:esm",
