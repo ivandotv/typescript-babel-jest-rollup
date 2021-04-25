@@ -15,6 +15,12 @@ module.exports = {
     __BUILD_DATE__: true,
     __COMMIT_SHA__: true
   },
+  collectCoverageFrom: [
+    '<rootDir>/src/**',
+    '!<rootDir>/src/index.ts',
+    '!<rootDir>/src/__tests__/**',
+    '!<rootDir>/src/__fixtures__/**'
+  ],
   coverageThreshold: {
     global: {
       branches: 80,
