@@ -5,15 +5,15 @@ import filesize from 'rollup-plugin-filesize'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import { terser } from 'rollup-plugin-terser'
 // import visualizer from 'rollup-plugin-visualizer'
-import pkg from './package.json'
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
-const libraryName = pkg.name
+const packageName = process.env.BUILD_PACKAGE_NAME
 
 const input = 'src/index.ts'
 
-const unpkgFilePath = libPath('./dist/unpkg', libraryName.toLocaleLowerCase())
+const unpkgFilePath = libPath('./dist/unpkg', packageName.toLocaleLowerCase())
+const esmFilePath = libPath('./dist/esm', packageName.toLocaleLowerCase())
 
 // https://github.com/rollup/rollup/issues/703#issuecomment-314848245
 function defaultPlugins(config = {}) {
@@ -27,13 +27,13 @@ function defaultPlugins(config = {}) {
   ]
 }
 
-const browserDev = {
+const cjsDev = {
   input,
   output: [
     {
-      file: libPath('./dist/cjs', libraryName)('.development.js'),
+      file: libPath('./dist/cjs', packageName)('.development.js'),
       format: 'cjs',
-      name: libraryName,
+      name: packageName,
       sourcemap: true
     }
   ],
@@ -46,13 +46,13 @@ const browserDev = {
   })
 }
 
-const browser = {
+const cjsProd = {
   input,
   output: [
     {
-      file: libPath('./dist/cjs/', libraryName)('.production.min.js'),
+      file: libPath('./dist/cjs', packageName)('.production.min.js'),
       format: 'cjs',
-      name: libraryName,
+      name: packageName,
       sourcemap: true,
       plugins: [terser()]
     }
@@ -73,13 +73,13 @@ const umd = {
     {
       file: unpkgFilePath('.js'),
       format: 'umd',
-      name: libraryName,
+      name: packageName,
       sourcemap: true
     },
     {
       file: unpkgFilePath('.min.js'),
       format: 'umd',
-      name: libraryName,
+      name: packageName,
       sourcemap: true,
       plugins: [terser()]
     }
@@ -99,13 +99,13 @@ const umdWithPolyfill = {
     {
       file: unpkgFilePath('.polyfill.js'),
       format: 'umd',
-      name: libraryName,
+      name: packageName,
       sourcemap: true
     },
     {
       file: unpkgFilePath('.polyfill.min.js'),
       format: 'umd',
-      name: libraryName,
+      name: packageName,
       sourcemap: true,
       plugins: [terser()]
     }
@@ -120,16 +120,16 @@ const umdWithPolyfill = {
 }
 
 // build for browser as module
-const browserModule = {
+const esm = {
   input,
   output: [
     {
-      file: unpkgFilePath('.esm.js'),
+      file: esmFilePath('.esm.js'),
       format: 'esm',
       sourcemap: true
     },
     {
-      file: unpkgFilePath('.esm.min.js'),
+      file: esmFilePath('.esm.min.js'),
       format: 'esm',
       sourcemap: true,
       plugins: [terser()]
@@ -144,16 +144,16 @@ const browserModule = {
   })
 }
 
-const browserModuleWithPolyfill = {
+const esmWithPolyfill = {
   input,
   output: [
     {
-      file: unpkgFilePath('.esm.polyfill.js'),
+      file: esmFilePath('.esm.polyfill.js'),
       format: 'esm',
       sourcemap: true
     },
     {
-      file: unpkgFilePath('.esm.polyfill.min.js'),
+      file: esmFilePath('.esm.polyfill.min.js'),
       format: 'esm',
       sourcemap: true,
       plugins: [terser()]
@@ -167,19 +167,12 @@ const browserModuleWithPolyfill = {
     }
   })
 }
+
 const envToBuild = {
-  cjsBrowserDev: [browserDev],
-  cjsBrowserProd: [browser],
-  unpkg: [umd, umdWithPolyfill, browserModule, browserModuleWithPolyfill]
+  cjs: [cjsDev, cjsProd],
+  umd: [umd, umdWithPolyfill],
+  esm: [esm, esmWithPolyfill]
 }
-
-let allBuilds = []
-
-for (const [key, value] of Object.entries(envToBuild)) {
-  allBuilds = allBuilds.concat(value)
-}
-
-const finalBuilds = chooseBuild(envToBuild, process.env.BUILD) || allBuilds
 
 function libPath(path, libName) {
   return function (suffix) {
@@ -188,9 +181,6 @@ function libPath(path, libName) {
 }
 
 function chooseBuild(buildMap, builds) {
-  if (!builds) {
-    return
-  }
   const envArr = builds.split(',')
   const result = []
 
@@ -210,4 +200,6 @@ function chooseBuild(buildMap, builds) {
   }
 }
 
-export default Promise.resolve([...finalBuilds])
+export default Promise.resolve(
+  chooseBuild(envToBuild, process.env.BUILD_TARGET)
+)
