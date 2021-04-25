@@ -16,15 +16,12 @@ const allBuilds = ['cjs', 'esm', 'umd']
 const buildBundle = argv.bundle ? argv.bundle.split(',') : allBuilds
 
 process.env.BUILD_TARGET = buildBundle.join(',')
-
-console.log('build target ---->', process.env.BUILD_TARGET)
-
-console.log({ buildBundle })
 ;(async () => {
   for (const build of buildBundle) {
     const deletedDirectoryPaths = await del([`dist/${build}`])
-
-    console.log('Deleted directories:\n', deletedDirectoryPaths.join('\n'))
+    if (deletedDirectoryPaths.length) {
+      console.log('Deleted directory:\n', deletedDirectoryPaths.join('\n'))
+    }
   }
 })()
 
@@ -32,7 +29,7 @@ let tasks = [
   function (cb) {
     spawn(
       'yarn',
-      ['--cwd', process.cwd(), 'rollup', '-c', '../../rollup.config.js'],
+      ['--cwd', process.cwd(), 'rollup', '-c', './rollup.config.js'],
       {
         stdio: 'inherit',
         shell: true
@@ -51,7 +48,7 @@ if (buildBundle.indexOf('cjs') !== -1) {
 series(tasks)
 
 async function createCjsIndexFile(libName) {
-  const file = await fs.readFile('../../scripts/cjs-browser-template.js', {
+  const file = await fs.readFile('./scripts/cjs-browser-template.js', {
     encoding: 'utf-8'
   })
 
