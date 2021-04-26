@@ -6,7 +6,7 @@
   "description": "",
   "buildTarget": "server",
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "module": "dist/esm/untilted.esm.js",
   "unpkg": "dist/unpkg/untilted.js",
   "jsdelivr": "dist/unpkg/untilted.js",
   "sideEffects": true,
@@ -36,6 +36,7 @@
     "server:watch": "del dist/cjs && cross-env BABEL_ENV=cjsWatch NODE_ENV=development babel src --out-dir dist/cjs --extensions .ts,.tsx,.js,.jsx --source-maps --watch",
     "browser:watch": "del dist/cjs && cross-env BABEL_ENV=browserWatch NODE_ENV=development babel src --out-dir dist/cjs --extensions .ts,.tsx,.js,.jsx --source-maps --watch",
     "browser:build": "yarn type:build && yarn test && node ./scripts/build-browser.js --bundle=umd,cjs,esm",
+    "build": "yarn browser:build",
     "prepublishOnly": "yarn build"
   },
   "engines": {
