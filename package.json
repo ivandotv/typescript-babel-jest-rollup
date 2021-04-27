@@ -4,7 +4,6 @@
   "private": true,
   "author": "Ivan Vlatkovic",
   "description": "",
-  "buildTarget": "server",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/untilted.esm.js",
   "unpkg": "dist/unpkg/untilted.js",
