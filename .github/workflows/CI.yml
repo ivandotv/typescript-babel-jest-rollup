@@ -38,9 +38,16 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Run tests
+      - name: Lint source
+        run: |
+          yarn lint:ci
+
+      - name: Check types
         run: |
           yarn type:check
+
+      - name: Run tests
+        run: |
           yarn test:ci
         env:
           CI: true
@@ -49,8 +56,8 @@ jobs:
         if: matrix.node == 14
         uses: codecov/codecov-action@v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          file: ./coverage/coverage-final.json
+          # not required for public repos
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       # - name: 'Publish to NPM'
       #   if: github.event_name == 'push' && github.repository == 'ivandotv/untilted' && matrix.node == 14
