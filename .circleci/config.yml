@@ -38,10 +38,18 @@ commands:
           paths:
             - $HOME/.yarn
       - run:
-          name: unit test
+          name: Lint source
+          command: |
+            yarn lint:ci
+      - run:
+          name: Check types
+          command: |
+            yarn lint:ci
+      - run:
+          name: Unit test
           command: |
             mkdir -p ./reports/junit
-            yarn test-ci
+            yarn test:ci
       - store_test_results:
           path: reports/junit/
   upload-coverage:
