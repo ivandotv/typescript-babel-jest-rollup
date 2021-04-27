@@ -52,6 +52,10 @@ jobs:
         env:
           CI: true
 
+      - name: Build API docs
+        run: |
+          yarn docs
+
       - name: Generate Code Coverage
         if: matrix.node == 14
         uses: codecov/codecov-action@v1

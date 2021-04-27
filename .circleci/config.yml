@@ -46,10 +46,15 @@ commands:
           command: |
             yarn lint:ci
       - run:
-          name: Unit test
+          name: Run tests
           command: |
             mkdir -p ./reports/junit
             yarn test:ci
+      - run:
+          name: Build API docs
+          command: |
+            yarn docs
+
       - store_test_results:
           path: reports/junit/
   upload-coverage:
