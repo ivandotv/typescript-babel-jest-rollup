@@ -8,12 +8,12 @@ import { terser } from 'rollup-plugin-terser'
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
-const packageName = process.env.BUILD_PACKAGE_NAME
+const packageName = process.env.BUILD_PACKAGE_NAME.toLowerCase()
 
 const input = 'src/index.ts'
 
-const unpkgFilePath = libPath('./dist/unpkg', packageName.toLocaleLowerCase())
-const esmFilePath = libPath('./dist/esm', packageName.toLocaleLowerCase())
+const umdFilePath = libPath('./dist/unpkg', packageName)
+const esmFilePath = libPath('./dist/esm', packageName)
 
 // https://github.com/rollup/rollup/issues/703#issuecomment-314848245
 function defaultPlugins(config = {}) {
@@ -71,13 +71,13 @@ const umd = {
   input,
   output: [
     {
-      file: unpkgFilePath('.js'),
+      file: umdFilePath('.js'),
       format: 'umd',
       name: packageName,
       sourcemap: true
     },
     {
-      file: unpkgFilePath('.min.js'),
+      file: umdFilePath('.min.js'),
       format: 'umd',
       name: packageName,
       sourcemap: true,
@@ -97,13 +97,13 @@ const umdWithPolyfill = {
   input,
   output: [
     {
-      file: unpkgFilePath('.polyfill.js'),
+      file: umdFilePath('.polyfill.js'),
       format: 'umd',
       name: packageName,
       sourcemap: true
     },
     {
-      file: unpkgFilePath('.polyfill.min.js'),
+      file: umdFilePath('.polyfill.min.js'),
       format: 'umd',
       name: packageName,
       sourcemap: true,
