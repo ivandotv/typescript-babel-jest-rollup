@@ -8,6 +8,11 @@
   "module": "dist/esm/untilted.esm.js",
   "unpkg": "dist/unpkg/untilted.js",
   "jsdelivr": "dist/unpkg/untilted.js",
+  "exports":{
+    "import":"./dist/esm/untilted.esm.js",
+    "require":"./dist/cjs/untilted.js",
+    "development":"./dist/cjs/untilted.development.js"
+  },
   "sideEffects": true,
   "types": "dist/types/",
   "files": [

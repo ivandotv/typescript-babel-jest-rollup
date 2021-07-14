@@ -30,7 +30,7 @@ process.env.BUILD_TARGET = buildBundle.join(',')
 })()
 
 let tasks = [
-  function (cb) {
+  (cb) => {
     spawn(
       'yarn',
       [
