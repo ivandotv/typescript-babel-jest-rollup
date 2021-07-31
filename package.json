@@ -10,7 +10,7 @@
   "jsdelivr": "dist/unpkg/untilted.js",
   "exports": {
     "import": "./dist/esm/untilted.esm.js",
-    "require": "./dist/cjs/untilted.js",
+    "require": "./dist/cjs/index.js",
     "development": "./dist/cjs/untilted.development.js"
   },
   "sideEffects": true,
