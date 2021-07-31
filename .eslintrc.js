@@ -58,6 +58,12 @@ module.exports = {
         accessibility: 'no-public'
       }
     ],
+    '@typescript-eslint/ban-ts-comment': [
+      'error',
+      {
+        'ts-expect-error': 'allow-with-description'
+      }
+    ],
     '@typescript-eslint/no-non-null-assertion': [2],
     '@typescript-eslint/member-delimiter-style': [
       'error',

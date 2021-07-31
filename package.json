@@ -8,10 +8,10 @@
   "module": "dist/esm/untilted.esm.js",
   "unpkg": "dist/unpkg/untilted.js",
   "jsdelivr": "dist/unpkg/untilted.js",
-  "exports":{
-    "import":"./dist/esm/untilted.esm.js",
-    "require":"./dist/cjs/untilted.js",
-    "development":"./dist/cjs/untilted.development.js"
+  "exports": {
+    "import": "./dist/esm/untilted.esm.js",
+    "require": "./dist/cjs/untilted.js",
+    "development": "./dist/cjs/untilted.development.js"
   },
   "sideEffects": true,
   "types": "dist/types/",
@@ -84,9 +84,11 @@
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
     "async": "^3.2.0",
+    "babel-plugin-annotate-pure-calls": "^0.4.0",
     "babel-plugin-dev-expression": "^0.2.2",
     "babel-plugin-minify-dead-code-elimination": "^0.5.1",
     "babel-plugin-transform-define": "^2.0.0",
+    "caniuse-lite": "^1.0.30001248",
     "commitizen": "^4.2.4",
     "conventional-changelog-conventionalcommits": "^4.6.0",
     "core-js": "^3.16.0",

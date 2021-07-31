@@ -93,32 +93,6 @@ const umd = {
   })
 }
 
-const umdWithPolyfill = {
-  input,
-  output: [
-    {
-      file: umdFilePath('.polyfill.js'),
-      format: 'umd',
-      name: packageName,
-      sourcemap: true
-    },
-    {
-      file: umdFilePath('.polyfill.min.js'),
-      format: 'umd',
-      name: packageName,
-      sourcemap: true,
-      plugins: [terser()]
-    }
-  ],
-  plugins: defaultPlugins({
-    babel: {
-      extensions,
-      envName: 'browserPolyfill',
-      babelHelpers: 'bundled'
-    }
-  })
-}
-
 // build for browser as module
 const esm = {
   input,
@@ -144,34 +118,10 @@ const esm = {
   })
 }
 
-const esmWithPolyfill = {
-  input,
-  output: [
-    {
-      file: esmFilePath('.esm.polyfill.js'),
-      format: 'esm',
-      sourcemap: true
-    },
-    {
-      file: esmFilePath('.esm.polyfill.min.js'),
-      format: 'esm',
-      sourcemap: true,
-      plugins: [terser()]
-    }
-  ],
-  plugins: defaultPlugins({
-    babel: {
-      extensions,
-      envName: 'browserModulePolyfill',
-      babelHelpers: 'bundled'
-    }
-  })
-}
-
 const envToBuild = {
   cjs: [cjsDev, cjsProd],
-  umd: [umd, umdWithPolyfill],
-  esm: [esm, esmWithPolyfill]
+  umd: [umd],
+  esm: [esm]
 }
 
 function libPath(path, libName) {
