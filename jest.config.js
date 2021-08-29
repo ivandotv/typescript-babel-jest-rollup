@@ -4,6 +4,7 @@ module.exports = {
     '<rootDir>/tests/?(*.)+(spec|test).[jt]s?(x)'
   ],
   testEnvironment: 'node',
+  moduleDirectories: ['node_modules', 'src'],
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname'
