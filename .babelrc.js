@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const pkg = require('./package.json')
 const { execSync } = require('child_process')
 
@@ -21,37 +22,30 @@ const ignoreForProduction = [
   'src/scratch/**'
 ]
 
-
 const replacements = {
   __VERSION__: pkgVersion,
   __BUILD_DATE__: buildDate,
   __COMMIT_SHA__: commitSha
-
 }
 
-
 //browser only replacements
-const browserReplacements = Object.assign({},{
-  'process.env.NODE_ENV': nodeEnv,
-},replacements)
-
-
-const plugins =[
-    ['@babel/plugin-proposal-nullish-coalescing-operator'], //node v10
-    ['@babel/plugin-proposal-optional-chaining'], // node v10
-    ['@babel/proposal-class-properties', { loose: true }], // stage-3 proposal
-    ['@babel/proposal-private-methods', { loose: true }], // stage-3 proposal
-    ["annotate-pure-calls"],
-    'dev-expression',
-    [
-      'transform-define',
-      replacements
-
-    ]
-  ].concat(
-  'production' === nodeEnv ? 'minify-dead-code-elimination' : []
+const browserReplacements = Object.assign(
+  {},
+  {
+    'process.env.NODE_ENV': nodeEnv
+  },
+  replacements
 )
 
+const plugins = [
+  ['@babel/plugin-proposal-nullish-coalescing-operator'], //node v10
+  ['@babel/plugin-proposal-optional-chaining'], // node v10
+  ['@babel/proposal-class-properties', { loose: true }], // stage-3 proposal
+  ['@babel/proposal-private-methods', { loose: true }], // stage-3 proposal
+  ['annotate-pure-calls'],
+  'dev-expression',
+  ['transform-define', replacements]
+].concat('production' === nodeEnv ? 'minify-dead-code-elimination' : [])
 
 // const serverPlugins = [['transform-define', replacements]].concat(
 //   'production' === nodeEnv ? 'minify-dead-code-elimination' : []
@@ -85,9 +79,9 @@ module.exports = {
             corejs: 3,
             targets: {
               browsers: [
-                'last 2 chrome version',
-                'last 2 firefox version',
-                'last 2 safari version'
+                'last 1 chrome version',
+                'last 1 firefox version',
+                'last 1 safari version'
               ]
             }
           }
@@ -110,7 +104,6 @@ module.exports = {
                 'last 2 firefox version',
                 'last 2 safari version'
               ]
-
             }
           }
         ]
@@ -129,11 +122,10 @@ module.exports = {
               // browsers: ['>0.2%', 'not dead', 'not op_mini all']
               // browsers: ['last 2 chrome version']
               browsers: [
-                'last 2 chrome version',
-                'last 2 firefox version',
-                'last 2 safari version'
+                'last 1 chrome version',
+                'last 1 firefox version',
+                'last 1 safari version'
               ]
-
             }
           }
         ]
@@ -189,7 +181,7 @@ module.exports = {
             // debug: true,
             modules: 'cjs',
             targets: {
-              node: 12 // es2028
+              node: 14 // es2028
             }
           }
         ]
