@@ -20,7 +20,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:jest/recommended',
     'prettier'
   ],
   parser: '@typescript-eslint/parser',
