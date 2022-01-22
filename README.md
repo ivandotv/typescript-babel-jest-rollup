@@ -1,5 +1,9 @@
 # TypeScript \* Babel \* Jest \* Rollup Quick Start Template
 
+## Archived in favor of [Microbundle TypeScript Template](https://github.com/ivandotv/microbundle-template)
+
+This repository has been archived in favor of the [new one](https://github.com/ivandotv/microbundle-template) which is build on top of [Microbundle](https://github.com/developit/microbundle)
+
 Opinionated template repository for creating Javascript libraries with Typescript, Rollup, Babel, and Jest.
 
 ## Getting Started
